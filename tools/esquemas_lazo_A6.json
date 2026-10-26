@@ -1,0 +1,116 @@
+{
+ "cabecera": "A6. El lazo: esquemas propuestos por claude-opus-5-5 (claude -p) para dos modelos descubiertos. Caso 1: adv_dif_1d con α = 2·10⁻³, descubierto u_t = -0.9998·u_x (FTCS no simula); propuestas 20261025-120942, 5 muestras, 2 afirmaciones distintas. Caso 2: α = 5·10⁻³, descubierto u_t = -0.9998·u_x + 0.005001·u_xx (FTCS necesita 5 subpasos); propuestas 20261025-123211, 5 muestras, 1 afirmación distinta",
+ "propuestas": [
+  {
+   "id": "c1_lax_wendroff_1",
+   "descripcion": "Lax-Wendroff explicito de segundo orden para adveccion pura, estable para |nu| <= 1",
+   "origen": "proponente claude-opus-5-5, muestra 1, 20261025-120942; también lax_wendroff_2 (proponente claude-opus-5-5, muestra 2, 20261025-120942); también lax_wendroff_4 (proponente claude-opus-5-5, muestra 4, 20261025-120942); también lax_wendroff_5 (proponente claude-opus-5-5, muestra 5, 20261025-120942)",
+   "parametros": [
+    "nu"
+   ],
+   "stencil": {
+    "-1": "nu/2 + nu^2/2",
+    "0": "1 - nu^2",
+    "1": "-nu/2 + nu^2/2"
+   },
+   "momentos": [
+    "1",
+    "-nu",
+    "nu^2"
+   ],
+   "decidir": [
+    {
+     "etiqueta": "lazo",
+     "region": "-1 ≤ nu ∧ nu ≤ 1",
+     "testigo": {
+      "nu": "1/2"
+     }
+    }
+   ],
+   "instancias": [
+    {
+     "etiqueta": "corrida",
+     "valores": {
+      "nu": "12978489287183359329473984574045/16225927682921337239877726502912"
+     },
+     "origen": "Corrida del lazo sobre adv_dif_1d; modelo descubierto u_t = -0.9998·u_x. Subpasos n = 1; dx = 0.025, dt = 0.02, α = 0.0, v = 0.9998264460438153."
+    }
+   ]
+  },
+  {
+   "id": "c1_lax_wendroff_3",
+   "descripcion": "Lax-Wendroff explicito de segundo orden para adveccion pura, estable para CFL |nu| <= 1",
+   "origen": "proponente claude-opus-5-5, muestra 3, 20261025-120942",
+   "parametros": [
+    "nu"
+   ],
+   "stencil": {
+    "-1": "(nu^2 + nu)/2",
+    "0": "1 - nu^2",
+    "1": "(nu^2 - nu)/2"
+   },
+   "momentos": [
+    "1",
+    "-nu",
+    "nu^2"
+   ],
+   "decidir": [
+    {
+     "etiqueta": "lazo",
+     "region": "nu^2 ≤ 1",
+     "testigo": {
+      "nu": "1/2"
+     }
+    }
+   ],
+   "instancias": [
+    {
+     "etiqueta": "corrida",
+     "valores": {
+      "nu": "12978489287183359329473984574045/16225927682921337239877726502912"
+     },
+     "origen": "Corrida del lazo sobre adv_dif_1d; modelo descubierto u_t = -0.9998·u_x. Subpasos n = 1; dx = 0.025, dt = 0.02, α = 0.0, v = 0.9998264460438153."
+    }
+   ]
+  },
+  {
+   "id": "c2_lax_wendroff_difusivo_1",
+   "descripcion": "Lax-Wendroff para advección más difusión explícita centrada (FTCS con r efectivo r+nu^2/2), segundo orden",
+   "origen": "proponente claude-opus-5-5, muestra 1, 20261025-123211; también lax_wendroff_difusivo_2 (proponente claude-opus-5-5, muestra 2, 20261025-123211); también lax_wendroff_difusivo_3 (proponente claude-opus-5-5, muestra 3, 20261025-123211); también lax_wendroff_adveccion_difusion_4 (proponente claude-opus-5-5, muestra 4, 20261025-123211); también lax_wendroff_difusivo_5 (proponente claude-opus-5-5, muestra 5, 20261025-123211)",
+   "parametros": [
+    "r",
+    "nu"
+   ],
+   "stencil": {
+    "-1": "r + nu/2 + nu^2/2",
+    "0": "1 - 2*r - nu^2",
+    "1": "r - nu/2 + nu^2/2"
+   },
+   "momentos": [
+    "1",
+    "-nu",
+    "2*r + nu^2"
+   ],
+   "decidir": [
+    {
+     "etiqueta": "lazo",
+     "region": "0 ≤ r ∧ 2*r + nu^2 ≤ 1",
+     "testigo": {
+      "r": "4/25",
+      "nu": "4/5"
+     }
+    }
+   ],
+   "instancias": [
+    {
+     "etiqueta": "corrida",
+     "valores": {
+      "r": "16619024206509876078670308532485/103845937170696564099824972652872",
+      "nu": "25956712799927325435395907181835/32451855365842674479755453005824"
+     },
+     "origen": "Corrida del lazo sobre adv_dif_1d (α del dato 0.005); modelo descubierto u_t = -0.9998·u_x +0.005001·u_xx. Subpasos n = 1; dx = 0.025, dt = 0.02, α = 0.005001105682158389, v = 0.9998162087847897."
+    }
+   ]
+  }
+ ]
+}

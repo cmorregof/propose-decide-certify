@@ -1,0 +1,357 @@
+{
+ "cabecera": "A8. Consistencia de esquemas con los moldes físicos (diseño A, cadena problema → modelo → esquema)",
+ "propuestas": [
+  {
+   "id": "m_ftcs_calor",
+   "descripcion": "FTCS para la difusión, r = α·Δt/Δx².",
+   "origen": "A8 (26 oct 2026)",
+   "parametros": [
+    "r"
+   ],
+   "stencil": {
+    "-1": "r",
+    "0": "1 - 2 * r",
+    "1": "r"
+   },
+   "momentos": [
+    "1",
+    "0",
+    "2 * r"
+   ],
+   "consistente": [
+    {
+     "etiqueta": "a",
+     "molde": "calor",
+     "orden_tiempo": 2,
+     "n": 4,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "molde": "calor",
+     "orden_tiempo": 1,
+     "n": 3,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2"
+     }
+    }
+   ]
+  },
+  {
+   "id": "m_upwind",
+   "descripcion": "Upwind para la advección, ν = v·Δt/Δx.",
+   "origen": "A8 (26 oct 2026)",
+   "parametros": [
+    "nu"
+   ],
+   "stencil": {
+    "-1": "nu",
+    "0": "1 - nu"
+   },
+   "momentos": [
+    "1",
+    "-nu",
+    "nu"
+   ],
+   "consistente": [
+    {
+     "etiqueta": "a",
+     "molde": "adveccion",
+     "orden_tiempo": 2,
+     "n": 2,
+     "sustitucion": {
+      "nu": "v * dt / dx"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "molde": "adveccion",
+     "orden_tiempo": 1,
+     "n": 1,
+     "sustitucion": {
+      "nu": "v * dt / dx"
+     }
+    }
+   ]
+  },
+  {
+   "id": "m_lax_wendroff",
+   "descripcion": "Lax–Wendroff para la advección, ν = v·Δt/Δx.",
+   "origen": "A8 (26 oct 2026)",
+   "parametros": [
+    "nu"
+   ],
+   "stencil": {
+    "-1": "nu * (nu + 1) / 2",
+    "0": "1 - nu ^ 2",
+    "1": "nu * (nu - 1) / 2"
+   },
+   "momentos": [
+    "1",
+    "-nu",
+    "nu ^ 2"
+   ],
+   "consistente": [
+    {
+     "etiqueta": "a",
+     "molde": "adveccion",
+     "orden_tiempo": 2,
+     "n": 3,
+     "sustitucion": {
+      "nu": "v * dt / dx"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "molde": "adveccion",
+     "orden_tiempo": 2,
+     "n": 2,
+     "sustitucion": {
+      "nu": "v * dt / dx"
+     }
+    }
+   ]
+  },
+  {
+   "id": "m_ftcs_conv_dif",
+   "descripcion": "FTCS con advección centrada para la advección–difusión.",
+   "origen": "A8 (26 oct 2026)",
+   "parametros": [
+    "r",
+    "nu"
+   ],
+   "stencil": {
+    "-1": "r + nu / 2",
+    "0": "1 - 2 * r",
+    "1": "r - nu / 2"
+   },
+   "momentos": [
+    "1",
+    "-nu",
+    "2 * r"
+   ],
+   "consistente": [
+    {
+     "etiqueta": "a",
+     "molde": "adveccion_difusion",
+     "orden_tiempo": 1,
+     "n": 2,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2",
+      "nu": "v * dt / dx"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "molde": "adveccion_difusion",
+     "orden_tiempo": 2,
+     "n": 4,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2",
+      "nu": "v * dt / dx"
+     }
+    }
+   ]
+  },
+  {
+   "id": "m_lw_difusion",
+   "descripcion": "Lax–Wendroff con difusión central para la advección–difusión.",
+   "origen": "A8 (26 oct 2026)",
+   "parametros": [
+    "r",
+    "nu"
+   ],
+   "stencil": {
+    "-1": "r + nu * (nu + 1) / 2",
+    "0": "1 - 2 * r - nu ^ 2",
+    "1": "r + nu * (nu - 1) / 2"
+   },
+   "momentos": [
+    "1",
+    "-nu",
+    "2 * r + nu ^ 2"
+   ],
+   "consistente": [
+    {
+     "etiqueta": "a",
+     "molde": "adveccion_difusion",
+     "orden_tiempo": 1,
+     "n": 2,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2",
+      "nu": "v * dt / dx"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "molde": "adveccion_difusion",
+     "orden_tiempo": 2,
+     "n": 4,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2",
+      "nu": "v * dt / dx"
+     }
+    }
+   ]
+  },
+  {
+   "id": "m_upwind_difusion",
+   "descripcion": "Upwind con difusión central para la advección–difusión.",
+   "origen": "A8 (26 oct 2026)",
+   "parametros": [
+    "r",
+    "nu"
+   ],
+   "stencil": {
+    "-1": "r + nu",
+    "0": "1 - 2 * r - nu",
+    "1": "r"
+   },
+   "momentos": [
+    "1",
+    "-nu",
+    "2 * r + nu"
+   ],
+   "consistente": [
+    {
+     "etiqueta": "a",
+     "molde": "adveccion_difusion",
+     "orden_tiempo": 1,
+     "n": 2,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2",
+      "nu": "v * dt / dx"
+     }
+    }
+   ]
+  },
+  {
+   "id": "m_ftcs4_calor",
+   "descripcion": "Diferencias centradas de cuarto orden y Euler explícito para la difusión.",
+   "origen": "A8 (26 oct 2026)",
+   "parametros": [
+    "r"
+   ],
+   "stencil": {
+    "-2": "-r / 12",
+    "-1": "4 * r / 3",
+    "0": "1 - 5 * r / 2",
+    "1": "4 * r / 3",
+    "2": "-r / 12"
+   },
+   "momentos": [
+    "1",
+    "0",
+    "2 * r"
+   ],
+   "consistente": [
+    {
+     "etiqueta": "a",
+     "molde": "calor",
+     "orden_tiempo": 1,
+     "n": 5,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "molde": "calor",
+     "orden_tiempo": 1,
+     "n": 3,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2"
+     }
+    }
+   ]
+  },
+  {
+   "id": "m_ftcs_reac_dif",
+   "descripcion": "FTCS con reacción explícita para la reacción–difusión lineal, s = λ·Δt.",
+   "origen": "A8 (26 oct 2026)",
+   "parametros": [
+    "r",
+    "s"
+   ],
+   "stencil": {
+    "-1": "r",
+    "0": "1 - 2 * r + s",
+    "1": "r"
+   },
+   "momentos": [
+    "1 + s",
+    "0",
+    "2 * r"
+   ],
+   "consistente": [
+    {
+     "etiqueta": "a",
+     "molde": "reaccion_difusion",
+     "orden_tiempo": 2,
+     "n": 4,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2",
+      "s": "lam * dt"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "molde": "reaccion_difusion",
+     "orden_tiempo": 1,
+     "n": 3,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2",
+      "s": "lam * dt"
+     }
+    }
+   ]
+  },
+  {
+   "id": "m_ftcs_adv_reac_dif",
+   "descripcion": "FTCS con advección centrada y reacción explícita.",
+   "origen": "A8 (26 oct 2026)",
+   "parametros": [
+    "r",
+    "nu",
+    "s"
+   ],
+   "stencil": {
+    "-1": "r + nu / 2",
+    "0": "1 - 2 * r + s",
+    "1": "r - nu / 2"
+   },
+   "momentos": [
+    "1 + s",
+    "-nu",
+    "2 * r"
+   ],
+   "consistente": [
+    {
+     "etiqueta": "a",
+     "molde": "adveccion_reaccion_difusion",
+     "orden_tiempo": 1,
+     "n": 2,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2",
+      "nu": "v * dt / dx",
+      "s": "lam * dt"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "molde": "adveccion_reaccion_difusion",
+     "orden_tiempo": 1,
+     "n": 3,
+     "sustitucion": {
+      "r": "alpha * dt / dx ^ 2",
+      "nu": "v * dt / dx",
+      "s": "lam * dt"
+     }
+    }
+   ]
+  }
+ ],
+ "nota_v2": "26 oct 2026: rehecha tras la revisión Opus de A8 (n ≥ orden·orden_tiempo, pares V–V y F–F, etiquetas a/b sorteadas con semilla 20261026)."
+}

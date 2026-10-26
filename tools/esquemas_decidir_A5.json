@@ -1,0 +1,194 @@
+{
+ "cabecera": "A5. Decidir: región propuesta frente a contraejemplo (diseño A)",
+ "propuestas": [
+  {
+   "id": "ftcs_calor",
+   "descripcion": "FTCS para u_t = α·u_xx, con r = α·Δt/Δx².",
+   "origen": "corpus de decidir del diseño A",
+   "parametros": [
+    "r"
+   ],
+   "stencil": {
+    "-1": "r",
+    "0": "1 - 2 * r",
+    "1": "r"
+   },
+   "decidir": [
+    {
+     "etiqueta": "a",
+     "region": "0 ≤ r ∧ r ≤ 1 / 2",
+     "testigo": {
+      "r": "1/4"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "region": "0 ≤ r ∧ r ≤ 3 / 5",
+     "testigo": {
+      "r": "1/4"
+     }
+    }
+   ]
+  },
+  {
+   "id": "upwind",
+   "descripcion": "Diferencia hacia atrás para u_t + c·u_x = 0, ν = c·Δt/Δx.",
+   "origen": "corpus de decidir del diseño A",
+   "parametros": [
+    "nu"
+   ],
+   "stencil": {
+    "-1": "nu",
+    "0": "1 - nu"
+   },
+   "decidir": [
+    {
+     "etiqueta": "a",
+     "region": "0 ≤ nu ∧ nu ≤ 1",
+     "testigo": {
+      "nu": "1/2"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "region": "0 ≤ nu ∧ nu ≤ 11 / 10",
+     "testigo": {
+      "nu": "1/2"
+     }
+    }
+   ]
+  },
+  {
+   "id": "downwind",
+   "descripcion": "Diferencia hacia adelante para u_t + c·u_x = 0, ν = c·Δt/Δx.",
+   "origen": "corpus de decidir del diseño A",
+   "parametros": [
+    "nu"
+   ],
+   "stencil": {
+    "0": "1 + nu",
+    "1": "-nu"
+   },
+   "decidir": [
+    {
+     "etiqueta": "a",
+     "region": "-1 ≤ nu ∧ nu ≤ 0",
+     "testigo": {
+      "nu": "-1/2"
+     }
+    }
+   ]
+  },
+  {
+   "id": "ftcs_adveccion",
+   "descripcion": "FTCS centrado para u_t + c·u_x = 0, ν = c·Δt/Δx.",
+   "origen": "corpus de decidir del diseño A",
+   "parametros": [
+    "nu"
+   ],
+   "stencil": {
+    "-1": "nu / 2",
+    "0": "1",
+    "1": "-nu / 2"
+   },
+   "decidir": [
+    {
+     "etiqueta": "a",
+     "region": "-1 ≤ nu ∧ nu ≤ 1",
+     "testigo": {
+      "nu": "1/2"
+     }
+    }
+   ]
+  },
+  {
+   "id": "lax_friedrichs",
+   "descripcion": "Lax-Friedrichs para u_t + c·u_x = 0, ν = c·Δt/Δx.",
+   "origen": "corpus de decidir del diseño A",
+   "parametros": [
+    "nu"
+   ],
+   "stencil": {
+    "-1": "(1 + nu) / 2",
+    "1": "(1 - nu) / 2"
+   },
+   "decidir": [
+    {
+     "etiqueta": "a",
+     "region": "-1 ≤ nu ∧ nu ≤ 1",
+     "testigo": {
+      "nu": "1/2"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "region": "-2 ≤ nu ∧ nu ≤ 0",
+     "testigo": {
+      "nu": "-1/2"
+     }
+    }
+   ]
+  },
+  {
+   "id": "beam_warming",
+   "descripcion": "Beam-Warming (segundo orden, hacia atrás) para u_t + c·u_x = 0, ν = c·Δt/Δx.",
+   "origen": "corpus de decidir del diseño A",
+   "parametros": [
+    "nu"
+   ],
+   "stencil": {
+    "-2": "nu * (nu - 1) / 2",
+    "-1": "nu * (2 - nu)",
+    "0": "(1 - nu) * (2 - nu) / 2"
+   },
+   "decidir": [
+    {
+     "etiqueta": "a",
+     "region": "0 ≤ nu ∧ nu ≤ 2",
+     "testigo": {
+      "nu": "1"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "region": "1 / 2 ≤ nu ∧ nu ≤ 5 / 2",
+     "testigo": {
+      "nu": "1"
+     }
+    }
+   ]
+  },
+  {
+   "id": "ftcs_conv_dif",
+   "descripcion": "FTCS para u_t + c·u_x = α·u_xx (advección centrada), con r = α·Δt/Δx² y ν = c·Δt/Δx.",
+   "origen": "corpus de decidir del diseño A",
+   "parametros": [
+    "r",
+    "nu"
+   ],
+   "stencil": {
+    "-1": "r + nu / 2",
+    "0": "1 - 2 * r",
+    "1": "r - nu / 2"
+   },
+   "decidir": [
+    {
+     "etiqueta": "a",
+     "region": "0 ≤ r ∧ r ≤ 1 / 2 ∧ nu ^ 2 ≤ 2 * r",
+     "testigo": {
+      "r": "1/4",
+      "nu": "1/2"
+     }
+    },
+    {
+     "etiqueta": "b",
+     "region": "0 ≤ r ∧ r ≤ 1 / 2 ∧ -1 ≤ nu ∧ nu ≤ 1",
+     "testigo": {
+      "r": "1/4",
+      "nu": "1/2"
+     }
+    }
+   ]
+  }
+ ]
+}
