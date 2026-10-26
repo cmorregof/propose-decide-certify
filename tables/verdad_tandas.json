@@ -1,0 +1,51 @@
+{
+ "A8_Moldes": {
+  "esq_m_ftcs_calor_decide_a": "no",
+  "esq_m_ftcs_calor_decide_b": "si",
+  "esq_m_upwind_decide_a": "no",
+  "esq_m_upwind_decide_b": "si",
+  "esq_m_lax_wendroff_decide_a": "no",
+  "esq_m_lax_wendroff_decide_b": "si",
+  "esq_m_ftcs_conv_dif_decide_a": "si",
+  "esq_m_ftcs_conv_dif_decide_b": "no",
+  "esq_m_lw_difusion_decide_a": "no",
+  "esq_m_lw_difusion_decide_b": "no",
+  "esq_m_upwind_difusion_decide_a": "no",
+  "esq_m_ftcs4_calor_decide_a": "si",
+  "esq_m_ftcs4_calor_decide_b": "si",
+  "esq_m_ftcs_reac_dif_decide_a": "no",
+  "esq_m_ftcs_reac_dif_decide_b": "si",
+  "esq_m_ftcs_adv_reac_dif_decide_a": "si",
+  "esq_m_ftcs_adv_reac_dif_decide_b": "no"
+ },
+ "A9v2_Aleatorios": {
+  "esq_aleat_01_decide_a": "no",
+  "esq_aleat_02_decide_a": "si",
+  "esq_aleat_03_decide_a": "si",
+  "esq_aleat_04_decide_a": "si",
+  "esq_aleat_05_decide_a": "no",
+  "esq_aleat_06_decide_a": "no",
+  "esq_aleat_07_decide_a": "si",
+  "esq_aleat_08_decide_a": "no",
+  "esq_aleat_09_decide_a": "no",
+  "esq_aleat_10_decide_a": "si",
+  "esq_aleat_11_decide_a": "si",
+  "esq_aleat_12_decide_a": "no",
+  "esq_aleat_13_decide_a": "no",
+  "esq_aleat_14_decide_a": "no",
+  "esq_aleat_15_decide_a": "si",
+  "esq_aleat_16_decide_a": "si",
+  "esq_aleat_17_decide_a": "si",
+  "esq_aleat_18_decide_a": "no",
+  "esq_aleat_19_decide_a": "no",
+  "esq_aleat_20_decide_a": "no",
+  "esq_aleat_21_decide_a": "si",
+  "esq_aleat_22_decide_a": "no",
+  "esq_aleat_23_decide_a": "si",
+  "esq_aleat_24_decide_a": "si"
+ },
+ "sha": {
+  "A8_Moldes": "6083f0603302c16e3be1a2af5bf100d2c99dd61c2a842c90092c54bcd9f8b2b5",
+  "A9v2_Aleatorios": "c6551bd77b7a391c8d403e5163907b66d14628e57a1f0900494e02cc08c5217c"
+ }
+}
